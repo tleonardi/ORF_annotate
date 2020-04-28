@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "ORF_annotate"
+version = "0.1.0a"
+description = ""
+authors = ["Tommaso Leonardi <tom@itm6.xyz>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pytest = "^5.4.1"
+bedparse = "^0.2.3"
+biopython = "^1.76"
+argparse = "^1.4.0"
+
+[tool.poetry.scripts]
+orf-annotate = 'orf_annotate.main:main'
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

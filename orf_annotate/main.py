@@ -3,7 +3,7 @@ import argparse
 from pkg_resources import get_distribution
 from orf_annotate import orf_annotate
 
-__version__ = get_distribution('orf_annotator').version
+__version__ = get_distribution('orf_annotate').version
 
 def main(args=None):
     if args is None:

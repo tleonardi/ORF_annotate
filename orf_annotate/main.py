@@ -1,7 +1,7 @@
 import sys
 import argparse
 from pkg_resources import get_distribution
-from orf_annotate import orf_annotate
+from orf_annotate.annotate_bed import annotate_bed
 
 __version__ = get_distribution('orf_annotate').version
 
@@ -18,7 +18,7 @@ def main(args=None):
     parser.add_argument('--longest', '-l', action="store_true", help="By default, the first ORF is annotated. If this option is used, we annotate the longest intead. In case of ties the first wins.")
     args = parser.parse_args()
 
-    annotator = orf_annotate.annotate_bed(bedfile=args.bedfile, fasta_file=args.fasta, stop_required=(not args.no_stop), min_len=args.min_len, longest=args.longest)
+    annotator = annotate_bed(bedfile=args.bedfile, fasta_file=args.fasta, stop_required=(not args.no_stop), min_len=args.min_len, longest=args.longest)
     for bl in annotator:
         bl.print()
 

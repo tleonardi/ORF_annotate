@@ -3,6 +3,41 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.Alphabet import IUPAC
 
+class orf(object):
+    """ Class that represents and Open Reading Frame
+    Attributes:
+        start (int): Start codon coordinate of the ORF in the parent sequence
+        stop (int): Stop codon coordinate of the ORF in the parent sequence
+        length (int): Number of aminoacids in the ORF
+        translation (str): Translation of the ORF
+        seq (str): ORF sequence
+    """
+    def __init__(self, start, length, stop=None, translation=None, sequence=None):
+        if(type(start) is not int):
+            raise Exception("ORF start is not an int")
+        if(stop and type(stop) is not int):
+            raise Exception("ORF stop is not an int")
+        if(stop<0):
+            stop=None
+        if(type(length) is not int):
+            raise Exception("ORF length is not an int")
+        if(length<1):
+            raise Exception("ORF length is less than 1")
+        if(type(length) is not int):
+            raise Exception("ORF length is not an int")
+        if(translation and type(translation) is not str):
+            raise Exception("ORF translation is not a string")
+        if(sequence and type(sequence) is not str):
+            raise Exception("ORF sequence is not a string")
+        if(stop is not None):
+            assert (stop-start)/3 == length
+        self.start = start
+        self.stop = stop
+        self.length = length
+        self.translation = translation
+        self.sequence = sequence
+        
+
 
 
 def load_fasta(fasta):
@@ -77,7 +112,7 @@ def find_orfs_in_seq(seq, stop_required=True, min_len=50):
         if len(tx)>=min_len and (stop_idx != -1 or stop_required is False):
             if stop_idx == -1:
                 stop_idx = len(subseq)+1
-            orfs[int(start_idx)] = {"start":int(start_idx), "len": len(tx), "tx": str(tx), "stop": stop_idx, "seq": str(subseq)}
+            orfs[int(start_idx)] = orf(start=int(start_idx), stop=int(stop_idx), length=len(tx), translation=str(tx), sequence=str(subseq))
     return(orfs)
 
 def choose_first_orf(orfs):

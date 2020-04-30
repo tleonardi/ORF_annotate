@@ -1,4 +1,5 @@
 from bedparse.bedline import bedline
+from Bio import Align
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.Alphabet import IUPAC

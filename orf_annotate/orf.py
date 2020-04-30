@@ -33,3 +33,17 @@ class orf(object):
         self.length = length
         self.translation = translation
         self.sequence = sequence 
+
+   def match_orf_to_db(self, fastadb, min_score_thr=-1):
+        aligner = Align.PairwiseAligner()
+        seq_to_match = self.translation
+        seq_dict = SeqIO.to_dict(SeqIO.parse(fastadb, "fasta"))
+        best_hit = ("NA", -1)
+        for id,seq in seq_dict.items():
+            score = aligner.score(seq_to_match, seq)
+            if score> best_hit[1]:
+                best_hit[0] = id
+                best_hit[1] = score
+        if best_hist[1]>min_score_thr:
+            self.orf_id = best_hit[0]
+

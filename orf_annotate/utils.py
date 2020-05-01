@@ -54,3 +54,21 @@ def trim_sequence(seq):
         seq = seq[:-remainder]
     assert len(seq)%3 == 0
     return(seq)
+
+def percent_identity(alignment):
+    """ Calculates % identity of an alignment.
+    Args:
+        aligment (Bio.Align.PairwiseAlignment): Alignment
+    Returns:
+        tuple: (% of target, % of query)
+    """
+    identity=0
+    for t,q in zip(*alignment.aligned):
+        qsubseq=alignment.query[q[0]:q[1]]
+        tsubseq=alignment.target[t[0]:t[1]]
+        assert len(qsubseq) == len(tsubseq)
+        for i in range(len(qsubseq)):
+            if qsubseq[i] == tsubseq[i]:
+                identity+=1
+    return(identity/len(alignment.target)*100, identity/len(alignment.query)*100)
+
